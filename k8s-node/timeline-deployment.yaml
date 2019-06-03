@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o k8s-node
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: timeline
+  name: timeline
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: timeline
+    spec:
+      containers:
+        - env:
+            - name: PRISMA_ENDPOINT
+              value: http://prisma:4466
+        image: timeline-service
+        name: timeline-service
+        ports:
+          - containerPort: 4000
+        resources: {}
+        volumeMounts:
+          - mountPath: /usr/src/app
+            name: timeline-claim0
+          - mountPath: /usr/src/app/node_modules
+            name: timeline-claim1
+      restartPolicy: Always
+      volumes:
+        - name: timeline-claim0
+        persistentVolumeClaim:
+          claimName: timeline-claim0
+          - name: timeline-claim1
+        persistentVolumeClaim:
+          claimName: timeline-claim1
+status: {}

@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  backend:
+    serviceName: timeline-service
+    servicePort: 4000
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: timeline-service
+              servicePort: 4000

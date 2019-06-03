@@ -1,0 +1,52 @@
+enum AttachmentType {
+  IMAGE
+  VIDEO
+  URL
+  STICKER
+}
+
+enum ActionType {
+  LIKE
+  SHARE
+  COMMENT
+}
+
+type User {
+  id: ID! @id
+  username: String!
+  email: String!  @unique
+  password: String!
+  timelines: [Timeline!]   @relation(name: "TimelinesByUser", onDelete: CASCADE)
+  mentions: [Timeline!] @relation(name: "MentionsByUsers")
+  createdAt: DateTime! @createdAt
+}
+
+type Attachment {
+  id: ID! @id
+  type: AttachmentType!
+  url: String!
+  timeline: Timeline!
+  createdAt: DateTime! @createdAt
+}
+
+type Timeline {
+  id: ID! @id
+  title: String!
+  content: String!
+  isPublished: Boolean @default(value: false)
+  author: User! @relation(name: "TimelinesByUser")
+  attachments: [Attachment!]  @relation(onDelete: CASCADE)
+  mentions: [User!] @relation(name: "MentionsByUsers")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Action {
+  id: ID! @id
+  author: User!
+  timeline: Timeline!
+  comment: Action
+  type: ActionType!
+  content: String
+  createdAt: DateTime @createdAt
+}
