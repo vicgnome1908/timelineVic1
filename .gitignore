@@ -175,4 +175,4 @@ fabric.properties
 # prisma & nexus generated
 src/generated/
 
-.idea
+*idea*
