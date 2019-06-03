@@ -2,7 +2,7 @@
 
 # Wait until prisma is avaliable, and download schemas
 #./docker-scripts/wait-for-it.sh prisma:4466 -- prisma deploy
-./docker-scripts/wait-for-it.sh localhost:4466 -- prisma deploy
+./docker-scripts/wait-for-it.sh prisma:4466 -- prisma deploy
 
 #node src/index.ts
 

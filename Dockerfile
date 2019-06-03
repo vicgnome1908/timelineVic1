@@ -1,14 +1,16 @@
-FROM node:latest
+#FROM node:latest
+#
+#RUN apt update && apt upgrade -y
 
-RUN apt update && apt upgrade -y
+FROM node:alpine
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install -g prisma
-
-RUN npm install
+RUN apk update && apk upgrade && apk --no-cache --virtual build-dependencies add python make g++ \
+&& npm install -g prisma && npm install \
+&& apk del build-dependencies
 
 COPY . .
 

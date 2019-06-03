@@ -9,3 +9,9 @@ README.md
 LICENSE
 .vscode
 .env
+Docs
+.prettierrc.yaml
+README.md
+tsconfig.json
+k8s-node
+src/generated
